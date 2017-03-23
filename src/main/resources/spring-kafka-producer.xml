@@ -4,17 +4,26 @@
        xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+	
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:kafka-producer.properties</value>
+			</list>
+		</property>
+	</bean>
+	
     <!-- 定义producer的参数 -->
     <bean id="producerProperties" class="java.util.HashMap">
         <constructor-arg>
             <map>
-                <entry key="bootstrap.servers" value="localhost:9092"/>
-                <entry key="group.id" value="testGroup"/>
+                <entry key="bootstrap.servers" value="${kafka.producer.bootstrap.servers}"/>
+                <entry key="group.id" value="${kafka.producer.group.id}"/>
                 <entry key="retries" value="10"/>
-                <entry key="batch.size" value="16384"/>
+                <entry key="batch.size" value="${kafka.producer.batch.size}"/>
                 <entry key="linger.ms" value="1"/>
-                <entry key="buffer.memory" value="33554432"/>
+                <entry key="buffer.memory" value="${kafka.producer.buffer.memory}"/>
                 <entry key="key.serializer" value="org.apache.kafka.common.serialization.StringSerializer"/>
                 <entry key="value.serializer" value="org.apache.kafka.common.serialization.StringSerializer"/>
             </map>

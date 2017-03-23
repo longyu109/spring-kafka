@@ -16,7 +16,7 @@ public class KafkaController {
     private static final Logger logger = Logger.getLogger(KafkaController.class);
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    private KafkaTemplate<String,Object> kafkaTemplate;
 
     @RequestMapping(value = "/test")
     public @ResponseBody Object index() {

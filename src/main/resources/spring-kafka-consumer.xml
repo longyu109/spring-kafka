@@ -8,18 +8,27 @@
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
-
+	
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:kafka-consumer.properties</value>
+			</list>
+		</property>
+	</bean>
+	
     <!-- 定义consumer的参数 -->
     <bean id="consumerProperties" class="java.util.HashMap">
         <constructor-arg>
             <map>
-                <entry key="bootstrap.servers" value="192.168.70.188:9092,192.168.70.189:9092"/>
-                <entry key="group.id" value="testGroup"/>
+                <entry key="bootstrap.servers" value="${kafka.consumer.bootstrap.servers}"/>
+                <entry key="group.id" value="${kafka.consumer.group.id}"/>
                 <entry key="enable.auto.commit" value="true"/>
                 <entry key="auto.commit.interval.ms" value="1000"/>
                 <entry key="session.timeout.ms" value="15000"/>
-                <entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
-                <entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+                <entry key="key.deserializer" value="${kafka.consumer.key.deserializer}"/>
+                <entry key="value.deserializer" value="${kafka.consumer.value.deserializer}"/>
             </map>
         </constructor-arg>
     </bean>
@@ -34,7 +43,7 @@
 
     <!-- 消费者容器配置信息 -->
     <bean id="containerProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
-        <constructor-arg value="kafka-spring-test"/>
+        <constructor-arg value="${kafka.consumer.topic}"/>
         <property name="messageListener" ref="messageListernerConsumerService"/>
     </bean>
 
