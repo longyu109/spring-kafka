@@ -1,4 +1,4 @@
-package com.lilaizhen.kafka;
+package com.linkstec.mot.kafka;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
